@@ -36,8 +36,7 @@ public class Sphere extends SceneObject {
             if (discriminant == 0.0) // Only one intersection
             {
                 t = (-b) / (2 * a);
-            } else // Two intersections, take the smaller t value
-            {
+            } else { // Two intersections, take the smaller t value
                 double t1 = ((-b) + Math.sqrt(discriminant)) / (2 * a);
                 double t2 = ((-b) - Math.sqrt(discriminant)) / (2 * a);
                 t = (t1 < t2) ? t1 : t2;

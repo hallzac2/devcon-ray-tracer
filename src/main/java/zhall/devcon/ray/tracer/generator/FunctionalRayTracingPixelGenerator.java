@@ -48,17 +48,11 @@ public class FunctionalRayTracingPixelGenerator implements PixelGenerator {
         return IntStream.range(0, width)
                 .mapToObj(x -> IntStream.range(0, height).mapToObj(y -> new Point(x, y)))
                 .flatMap(identity())
-                .collect(
-                        toMap(
-                                identity(),
-                                getColorAtPoint(width, height)
-                        )
-                );
+                .collect(toMap(identity(), getColorAtPoint(width, height)));
     }
 
     private Function<Point, Color> getColorAtPoint(int width, int height) {
-        return p
-                -> {
+        return p -> {
             double px = Coordinates.normalize(p.x, width);
             double py = Coordinates.normalize(width - p.y, height);
             Vector screenPoint = new Vector(px, py, scene.getScreenZCoordinate());
@@ -82,8 +76,7 @@ public class FunctionalRayTracingPixelGenerator implements PixelGenerator {
     }
 
     private Function<Intersection, Vector> determineColorAtIntersection(Vector direction, int recursionDepth) {
-        return intersection
-                -> {
+        return intersection -> {
             Vector reflection = reflect(direction, intersection.getNormalAtIntersection());
             Vector localColor = lighting.calculate(scene.getObjectsInScene(), scene.getEye(), intersection);
             Vector nextStartingPoint = createParametricPoint(intersection.getIntersectionPoint(), reflection, 0.1);
